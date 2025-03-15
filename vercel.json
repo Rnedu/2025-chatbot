@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "streamlit_app.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "env": {
+      "OPENAI_API_KEY": "@OPENAI_API_KEY",
+      "FIREBASE_PROJECT_ID": "@FIREBASE_PROJECT_ID",
+      "FIREBASE_PRIVATE_KEY_ID": "@FIREBASE_PRIVATE_KEY_ID",
+      "FIREBASE_PRIVATE_KEY": "@FIREBASE_PRIVATE_KEY",
+      "FIREBASE_CLIENT_EMAIL": "@FIREBASE_CLIENT_EMAIL",
+      "FIREBASE_CLIENT_ID": "@FIREBASE_CLIENT_ID"
+    }
+  }

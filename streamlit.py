@@ -3,27 +3,21 @@ import openai
 import time
 import firebase_admin
 from firebase_admin import credentials, firestore
-from dotenv import load_dotenv
 import os
 import json
 
-# Configuration
-# Load environment variables from .env
-load_dotenv()
-
 # Retrieve secrets
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# Load API Key
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
-# Initialize OpenAI Client
-client = openai.OpenAI(api_key=OPENAI_API_KEY)
-
+# Load Firebase Credentials
 firebase_creds = {
     "type": "service_account",
-    "project_id": os.getenv("FIREBASE_PROJECT_ID"),
-    "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
-    "private_key": os.getenv("FIREBASE_PRIVATE_KEY").replace("\\n", "\n"),  # Convert \n to actual new lines
-    "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
-    "client_id": os.getenv("FIREBASE_CLIENT_ID"),
+    "project_id": st.secrets["FIREBASE_PROJECT_ID"],
+    "private_key_id": st.secrets["FIREBASE_PRIVATE_KEY_ID"],
+    "private_key": st.secrets["FIREBASE_PRIVATE_KEY"],
+    "client_email": st.secrets["FIREBASE_CLIENT_EMAIL"],
+    "client_id": st.secrets["FIREBASE_CLIENT_ID"],
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
@@ -31,8 +25,12 @@ firebase_creds = {
     "universe_domain": "googleapis.com"
 }
 
+# Initialize OpenAI Client
+client = openai.OpenAI(api_key=OPENAI_API_KEY)
+
+
 if not firebase_admin._apps:
-    cred = credentials.Certificate("thesis-chat-4ce35-firebase-adminsdk-fbsvc-3e5650d0f2.json")
+    cred = credentials.Certificate(firebase_creds)
     firebase_admin.initialize_app(cred)
 
 if not OPENAI_API_KEY:

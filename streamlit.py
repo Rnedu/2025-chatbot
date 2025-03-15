@@ -53,8 +53,8 @@ if "start_time" not in st.session_state:
 
 # User Authentication
 st.title("Chatbot Session")
-name = st.text_input("Enter your name:")
-password = st.text_input("Enter a password:", type="password")
+name = st.text_input("Enter your Full Name:")
+password = st.text_input("Enter the password:", type="password")
 actual = "usyd-genai"
 
 if st.button("Start Chat") and name and password==actual:
@@ -63,11 +63,36 @@ if st.button("Start Chat") and name and password==actual:
     st.session_state.chat_history.append({"role": "system", "content": f"Hello {name}, let's begin!"})
     st.rerun()
 
+import random
+
+# Define questions
+questions = [
+    "What are the benefits of AI in education?",
+    "How can generative AI help students with their coursework?",
+    "What are the challenges of using AI in learning?",
+    "Can AI improve the way students interact with educational content?",
+    "How does AI compare to human tutors in education?"
+]
+
+# Select a random question when the session starts
+if "random_question" not in st.session_state:
+    st.session_state.random_question = random.choice(questions)
+
+# Sidebar Timer Display with Survey Notice
+
 # Timer Logic
 if st.session_state.chat_started:
     elapsed_time = time.time() - st.session_state.start_time
     remaining_time = max(0, 60 - int(elapsed_time))  # 10-minute timer
-    st.sidebar.markdown(f"### ⏳ Time Remaining: {remaining_time // 60}:{remaining_time % 60:02d}")
+    st.sidebar.markdown(f"""
+    ### ⏳ Time Remaining: {remaining_time // 60}:{remaining_time % 60:02d}
+
+    After the time is up, you will be redirected to the survey page.
+    """)
+
+    # Suggest a question to the user
+    st.info(f"💡 Try asking this: **{st.session_state.random_question}**")
+
 
     if remaining_time == 0:
         st.session_state.chat_started = False

@@ -106,7 +106,7 @@ if st.session_state.chat_started:
 
         # **Generate AI Response**
         prompt = f"""
-        You are a helpful chatbot. Engage with {name} in a friendly and informative manner.
+        You are a helpful chatbot. Engage with {name} in a tutor and informative manner.
         """
 
         response = client.chat.completions.create(

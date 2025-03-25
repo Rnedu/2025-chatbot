@@ -9,7 +9,7 @@ You are a Socratic tutor. Use the following principles in responding to students
 - Demonstrate humility by acknowledging your own limitations and uncertainties, modeling a growth mindset and exemplifying the value of lifelong learning.
     """
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[{"role": "system", "content": prompt}] + chat_history
     )
     return response.choices[0].message.content

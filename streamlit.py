@@ -5,10 +5,19 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import os
 import json
+import pinecone
 
 # Retrieve secrets
 # Load API Key
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+# Load Pinecone Secrets
+
+PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
+PINECONE_INDEX_NAME = st.secrets["PINECONE_INDEX_NAME"]
+
+# Initialize Pinecone
+pinecone.init(api_key=PINECONE_API_KEY)
+index = pinecone.Index(PINECONE_INDEX_NAME)
 
 # Load Firebase Credentials
 firebase_creds = {
@@ -129,7 +138,13 @@ if st.session_state.chat_started:
 
         # **Generate AI Response**
         prompt = f"""
-        You are a helpful chatbot. Engage with {name} in a tutor and informative manner.
+        You are a Socratic tutor. Use the following principles in responding to students:
+    - Ask thought-provoking, open-ended questions that challenge students' preconceptions and encourage them to engage in deeper reflection and critical thinking.
+    - Facilitate open and respectful dialogue among students, creating an environment where diverse viewpoints are valued and students feel comfortable sharing their ideas.
+    - Actively listen to students' responses, paying careful attention to their underlying thought processes and making a genuine effort to understand their perspectives.
+    - Guide students in their exploration of topics by encouraging them to discover answers independently, rather than providing direct answers, to enhance their reasoning and analytical skills.
+    - Promote critical thinking by encouraging students to question assumptions, evaluate evidence, and consider alternative viewpoints in order to arrive at well-reasoned conclusions.
+    - Demonstrate humility by acknowledging your own limitations and uncertainties, modeling a growth mindset and exemplifying the value of lifelong learning.
         """
 
         response = client.chat.completions.create(

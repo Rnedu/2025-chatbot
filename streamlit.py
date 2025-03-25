@@ -5,7 +5,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import os
 import json
-import pinecone
+from pinecone import Pinecone
 
 # Retrieve secrets
 # Load API Key
@@ -16,8 +16,8 @@ PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
 PINECONE_INDEX_NAME = st.secrets["PINECONE_INDEX_NAME"]
 
 # Initialize Pinecone
-pinecone.init(api_key=PINECONE_API_KEY)
-index = pinecone.Index(PINECONE_INDEX_NAME)
+pc = Pinecone(PINECONE_API_KEY)
+index = pc.Index(PINECONE_INDEX_NAME)
 
 # Load Firebase Credentials
 firebase_creds = {
@@ -87,6 +87,19 @@ questions = [
 if "random_question" not in st.session_state:
     st.session_state.random_question = random.choice(questions)
 
+
+if "chatbot_version" not in st.session_state:
+    st.session_state.chatbot_version = random.choice([1, 2, 3])
+
+if st.session_state.chatbot_version == 1:
+    from chatbot_configs import chatbot_v1 as chatbot_module
+elif st.session_state.chatbot_version == 2:
+    from chatbot_configs import chatbot_v2 as chatbot_module
+else:
+    from chatbot_configs import chatbot_v3 as chatbot_module
+
+st.sidebar.markdown(f"🔒 Internal: Chatbot Version **{st.session_state.chatbot_version}**")
+
 # Sidebar Timer Display with Survey Notice
 
 # Timer Logic
@@ -111,6 +124,7 @@ if st.session_state.chat_started:
         chat_collection.add({
             "name": name,
             "chat_log": chat_log,
+            "chatbot_version": st.session_state.chatbot_version,
             "timestamp": time.time()
         })
 
@@ -136,23 +150,7 @@ if st.session_state.chat_started:
 
         st.session_state.chat_history.append({"role": "user", "content": user_input})
 
-        # **Generate AI Response**
-        prompt = f"""
-        You are a Socratic tutor. Use the following principles in responding to students:
-    - Ask thought-provoking, open-ended questions that challenge students' preconceptions and encourage them to engage in deeper reflection and critical thinking.
-    - Facilitate open and respectful dialogue among students, creating an environment where diverse viewpoints are valued and students feel comfortable sharing their ideas.
-    - Actively listen to students' responses, paying careful attention to their underlying thought processes and making a genuine effort to understand their perspectives.
-    - Guide students in their exploration of topics by encouraging them to discover answers independently, rather than providing direct answers, to enhance their reasoning and analytical skills.
-    - Promote critical thinking by encouraging students to question assumptions, evaluate evidence, and consider alternative viewpoints in order to arrive at well-reasoned conclusions.
-    - Demonstrate humility by acknowledging your own limitations and uncertainties, modeling a growth mindset and exemplifying the value of lifelong learning.
-        """
-
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "system", "content": prompt}] + st.session_state.chat_history
-        )
-
-        bot_reply = response.choices[0].message.content
+        bot_reply = chatbot_module.generate_response(client, st.session_state.chat_history)
         st.session_state.chat_history.append({"role": "assistant", "content": bot_reply})
 
         # Display AI Response Instantly

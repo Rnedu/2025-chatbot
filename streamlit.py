@@ -76,11 +76,13 @@ import random
 
 # Define questions
 questions = [
-    "What are the benefits of AI in education?",
+    "What is regression?",
     "How can generative AI help students with their coursework?",
-    "What are the challenges of using AI in learning?",
-    "Can AI improve the way students interact with educational content?",
-    "How does AI compare to human tutors in education?"
+    "What is Machine Learning?",
+    "What is Supervised learning and Unsupervised learning?",
+    "What is training versus testing in the context of ML?",
+    "Why do we do data pre processing",
+    "What are Conventional Neural Networks and how do they work"
 ]
 
 # Select a random question when the session starts
@@ -105,7 +107,7 @@ st.sidebar.markdown(f"🔒 Internal: Chatbot Version **{st.session_state.chatbot
 # Timer Logic
 if st.session_state.chat_started:
     elapsed_time = time.time() - st.session_state.start_time
-    remaining_time = max(0, 60 - int(elapsed_time))  # 10-minute timer
+    remaining_time = max(0, 600 - int(elapsed_time))  # 10-minute timer
     st.sidebar.markdown(f"""
     ### ⏳ Time Remaining: {remaining_time // 60}:{remaining_time % 60:02d}
 

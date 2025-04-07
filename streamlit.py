@@ -107,11 +107,12 @@ st.sidebar.markdown(f"🔒 Internal: Chatbot Version **{st.session_state.chatbot
 # Timer Logic
 if st.session_state.chat_started:
     elapsed_time = time.time() - st.session_state.start_time
-    remaining_time = max(0, 600 - int(elapsed_time))  # 10-minute timer
+    remaining_time = max(0, 360 - int(elapsed_time))  # 10-minute timer
     st.sidebar.markdown(f"""
     ### ⏳ Time Remaining: {remaining_time // 60}:{remaining_time % 60:02d}
 
     After the time is up, you will be redirected to the survey page.
+    Please have a learning mindset and probe the chatbot based on your starting question
     """)
 
     # Suggest a question to the user

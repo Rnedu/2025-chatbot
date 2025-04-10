@@ -65,6 +65,7 @@ st.title("Chatbot Session")
 name = st.text_input("Enter your Full Name:")
 password = st.text_input("Enter the password:", type="password")
 actual = "usyd-genai"
+st.text("You will be presented with randomly chosen question related to the ENGG2112 curriculum, please ask the chatbot that question and continue the conversation with a learning mindset")
 
 if st.button("Start Chat") and name and password==actual:
     st.session_state.chat_started = True
@@ -82,7 +83,7 @@ questions = [
     "What is Supervised learning and Unsupervised learning?",
     "What is training versus testing in the context of ML?",
     "Why do we do data pre processing",
-    "What are Conventional Neural Networks and how do they work"
+    "What are Convolutional Neural Networks and how do they work"
 ]
 
 # Select a random question when the session starts
@@ -100,7 +101,7 @@ elif st.session_state.chatbot_version == 2:
 else:
     from chatbot_configs import chatbot_v3 as chatbot_module
 
-st.sidebar.markdown(f"🔒 Internal: Chatbot Version **{st.session_state.chatbot_version}**")
+st.sidebar.markdown(f"🔒 Internal: Chatbot Version **{st.session_state.chatbot_version}\n Please note this down for the survey**")
 
 # Sidebar Timer Display with Survey Notice
 

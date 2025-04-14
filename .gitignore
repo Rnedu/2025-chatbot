@@ -2,4 +2,4 @@
 .env
 thesis-chat-4ce35-firebase-adminsdk-fbsvc-3e5650d0f2.json
 .env*.local
-secret.toml
+.streamlit

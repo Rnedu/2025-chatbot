@@ -101,7 +101,7 @@ elif st.session_state.chatbot_version == 2:
 else:
     from chatbot_configs import chatbot_v3 as chatbot_module
 
-st.sidebar.markdown(f"🔒 Internal: Chatbot Version **{st.session_state.chatbot_version}\n Please note this down for the survey**")
+st.sidebar.markdown(f"🔒 Internal: Chatbot Version **{st.session_state.chatbot_version}**\n Please note this down for the survey")
 
 # Sidebar Timer Display with Survey Notice
 

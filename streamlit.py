@@ -92,7 +92,7 @@ if "random_question" not in st.session_state:
 
 
 if "chatbot_version" not in st.session_state:
-    st.session_state.chatbot_version = random.choice([1, 2, 3])
+    st.session_state.chatbot_version = random.choice([1])
 
 if st.session_state.chatbot_version == 1:
     from chatbot_configs import chatbot_v1 as chatbot_module

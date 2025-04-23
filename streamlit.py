@@ -83,7 +83,25 @@ questions = [
     "What is Supervised learning and Unsupervised learning?",
     "What is training versus testing in the context of ML?",
     "Why do we do data pre processing",
-    "What are Convolutional Neural Networks and how do they work"
+    "What are Convolutional Neural Networks and how do they work",
+    "How is machine learning different from traditional programming?",
+    "What are the main types of machine learning?",
+    "Can you explain supervised learning with an example?",
+    "What’s the difference between classification and regression?",
+    "What is a dataset, and why is it important?",
+    "How do you prepare data for a machine learning model?",
+    "What is a loss function?",
+    "How does a model “learn” during training?",
+    "What is gradient descent?",
+    "What are some common algorithms used in machine learning?",
+    "What’s the difference between a model and an algorithm?",
+    "How do you evaluate the performance of a machine learning model?",
+    "What are precision, recall, and F1-score?",
+    "What tools or libraries are commonly used for machine learning?",
+    "Can you walk me through building a simple machine learning project?",
+    "What are neural networks, and how do they work?",
+    "How is deep learning different from regular machine learning?",
+    "What’s the future of machine learning, and what should I focus on as a beginner?"
 ]
 
 # Select a random question when the session starts
@@ -92,7 +110,7 @@ if "random_question" not in st.session_state:
 
 
 if "chatbot_version" not in st.session_state:
-    st.session_state.chatbot_version = random.choice([1])
+    st.session_state.chatbot_version = random.choice([3])
 
 if st.session_state.chatbot_version == 1:
     from chatbot_configs import chatbot_v1 as chatbot_module

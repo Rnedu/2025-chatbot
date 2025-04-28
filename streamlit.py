@@ -65,6 +65,7 @@ st.title("Chatbot Session")
 name = st.text_input("Enter your Full Name:")
 password = st.text_input("Enter the password:", type="password")
 actual = "usyd-genai"
+st.text("The password is 'usyd-genai' this step was purely for bot prevention ")
 st.text("You will be presented with randomly chosen question related to the ENGG2112 curriculum, please ask the chatbot that question and continue the conversation with a learning mindset")
 
 if st.button("Start Chat") and name and password==actual:
@@ -131,6 +132,7 @@ if st.session_state.chat_started:
     ### ⏳ Time Remaining: {remaining_time // 60}:{remaining_time % 60:02d}
 
     After the time is up, you will be redirected to the survey page.
+    **The timer must hit zero to be redirected**
     Please have a learning mindset and probe the chatbot based on your starting question
     """)
 
